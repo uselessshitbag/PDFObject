@@ -211,7 +211,7 @@
             fallbackLink = (typeof options.fallbackLink !== "undefined") ? options.fallbackLink : true,
             width = (options.width) ? options.width : "100%",
             height = (options.height) ? options.height : "100%",
-            assumptionMode = (typeof options.assumptionMode === "boolean") ? options.assumptionMode : true,
+            assumptionMode = (typeof options.assumptionMode === "boolean") ? options.assumptionMode : false,
             forcePDFJS = (typeof options.forcePDFJS === "boolean") ? options.forcePDFJS : false,
             PDFJS_URL = (options.PDFJS_URL) ? options.PDFJS_URL : false,
             targetNode = getTargetElement(targetSelector),
