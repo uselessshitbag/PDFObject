@@ -34,37 +34,34 @@
     if(typeof window === "undefined" || typeof navigator === "undefined"){ return false; }
 
     var pdfobjectversion = "2.0.20171219",
-        supportsPDFs,
+        ua = window.navigator.userAgent,
 
-        //declare functions
-        createAXO,
+        //declare booleans
+        supportsPDFs,
         isIE,
         supportsPdfMimeType = (typeof navigator.mimeTypes['application/pdf'] !== "undefined"),
         supportsPdfActiveX,
+        isModernBrowser = (function (){ return (typeof window.Promise !== "undefined"); })(),
+        isFirefox = (function (){ return (ua.indexOf("irefox") !== -1); } )(),
+        isFirefoxWithPDFJS = (function (){
+            //Firefox started shipping PDF.js in Firefox 19.
+            //If this is Firefox 19 or greater, assume PDF.js is available
+            if(!isFirefox){ return false; }
+            //parse userAgent string to get release version ("rv")
+            //ex: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:57.0) Gecko/20100101 Firefox/57.0
+            return (parseInt(ua.split("rv:")[1].split(".")[0], 10) > 18);
+        })(),
+        isIOS = (function (){ return (/iphone|ipad|ipod/i.test(ua.toLowerCase())); })(),
+
+        //declare functions
+        createAXO,
         buildFragmentString,
         log,
         embedError,
         embed,
         getTargetElement,
         generatePDFJSiframe,
-        isModernBrowser = (function (){ return (typeof window.Promise !== "undefined"); })(),
-
-        ua = window.navigator.userAgent,
-        //Sniff for Firefox
-        isFirefox = (function (){ return (ua.indexOf("irefox") !== -1); } )(),
-        //Firefox started shipping PDF.js in Firefox 19.
-        //If this is Firefox 19 or greater, assume PDF.js is available
-        isFirefoxWithPDFJS = (function (){
-            if(!isFirefox){ return false; }
-            //parse userAgent string to get release version ("rv")
-            //ex: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:57.0) Gecko/20100101 Firefox/57.0
-            return (parseInt(ua.split("rv:")[1].split(".")[0], 10) > 18);
-        })(),
-
-        isIOS = (function (){ return (/iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase())); })(),
         generateEmbedElement;
-
-
 
 
     /* ----------------------------------------------------
