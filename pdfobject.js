@@ -2,9 +2,9 @@
 //jshint unused:false, strict: false
 
 /*
-    PDFObject v2.0.201604172
+    PDFObject v2.0.20171219
     https://github.com/pipwerks/PDFObject
-    Copyright (c) 2008-2016 Philip Hutchison
+    Copyright (c) 2008-2018 Philip Hutchison
     MIT-style license: http://pipwerks.mit-license.org/
     UMD module pattern from https://github.com/umdjs/umd/blob/master/templates/returnExports.js
 */
@@ -33,7 +33,7 @@
 
     if(typeof window === "undefined" || typeof navigator === "undefined"){ return false; }
 
-    var pdfobjectversion = "2.0.201604172",
+    var pdfobjectversion = "2.0.20171219",
         supportsPDFs,
 
         //declare functions
