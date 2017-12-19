@@ -47,7 +47,20 @@
         embed,
         getTargetElement,
         generatePDFJSiframe,
-        isModernBrowser = (function (){ return (typeof window.Promise !== "undefined") })(),
+        isModernBrowser = (function (){ return (typeof window.Promise !== "undefined"); })(),
+
+        ua = window.navigator.userAgent,
+        //Sniff for Firefox
+        isFirefox = (function (){ return (ua.indexOf("irefox") !== -1); } )(),
+        //Firefox started shipping PDF.js in Firefox 19.
+        //If this is Firefox 19 or greater, assume PDF.js is available
+        isFirefoxWithPDFJS = (function (){
+            if(!isFirefox){ return false; }
+            //parse userAgent string to get release version ("rv")
+            //ex: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:57.0) Gecko/20100101 Firefox/57.0
+            return (parseInt(ua.split("rv:")[1].split(".")[0], 10) > 18);
+        })(),
+
         isIOS = (function (){ return (/iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase())); })(),
         generateEmbedElement;
 
@@ -81,7 +94,7 @@
     supportsPdfActiveX = function (){ return !!(createAXO("AcroPDF.PDF") || createAXO("PDF.PdfCtrl")); };
 
     //Determines whether PDF support is available
-    supportsPDFs = (supportsPdfMimeType || (isIE() && supportsPdfActiveX()));
+    supportsPDFs = (isFirefoxWithPDFJS || supportsPdfMimeType || (isIE() && supportsPdfActiveX()));
 
     //Create a fragment identifier for using PDF Open parameters when embedding PDF
     buildFragmentString = function(pdfParams){
