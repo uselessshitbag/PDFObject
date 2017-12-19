@@ -47,8 +47,11 @@
         embed,
         getTargetElement,
         generatePDFJSiframe,
+        isModernBrowser = (function (){ return (typeof window.Promise !== "undefined") })(),
         isIOS = (function (){ return (/iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase())); })(),
         generateEmbedElement;
+
+
 
 
     /* ----------------------------------------------------
@@ -198,6 +201,7 @@
             fallbackLink = (typeof options.fallbackLink !== "undefined") ? options.fallbackLink : true,
             width = (options.width) ? options.width : "100%",
             height = (options.height) ? options.height : "100%",
+            assumptionMode = (typeof options.assumptionMode === "boolean") ? options.assumptionMode : true,
             forcePDFJS = (typeof options.forcePDFJS === "boolean") ? options.forcePDFJS : false,
             PDFJS_URL = (options.PDFJS_URL) ? options.PDFJS_URL : false,
             targetNode = getTargetElement(targetSelector),
@@ -222,7 +226,7 @@
 
             return generatePDFJSiframe(targetNode, url, pdfOpenFragment, PDFJS_URL, id);
 
-        } else if(supportsPDFs){
+        } else if((assumptionMode && isModernBrowser) || supportsPDFs){
 
             return generateEmbedElement(targetNode, targetSelector, url, pdfOpenFragment, width, height, id);
 
