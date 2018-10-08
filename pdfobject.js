@@ -2,7 +2,7 @@
 //jshint unused:false, strict: false
 
 /*
-    PDFObject v2.0.20171219
+    PDFObject v2.0.20181007
     https://github.com/pipwerks/PDFObject
     Copyright (c) 2008-2018 Philip Hutchison
     MIT-style license: http://pipwerks.mit-license.org/
@@ -211,7 +211,7 @@
             fallbackLink = (typeof options.fallbackLink !== "undefined") ? options.fallbackLink : true,
             width = (options.width) ? options.width : "100%",
             height = (options.height) ? options.height : "100%",
-            assumptionMode = (typeof options.assumptionMode === "boolean") ? options.assumptionMode : false,
+            assumptionMode = (typeof options.assumptionMode === "boolean") ? options.assumptionMode : true,
             forcePDFJS = (typeof options.forcePDFJS === "boolean") ? options.forcePDFJS : false,
             PDFJS_URL = (options.PDFJS_URL) ? options.PDFJS_URL : false,
             targetNode = getTargetElement(targetSelector),
